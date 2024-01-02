@@ -10,6 +10,10 @@ module.exports=app=>{
     app.put("/users/userupdate",userController.updateUser);
     app.get("/users/userinfo",userController.selectAll);
 
+    //react try with post
+    app.post("/users/getinfo",userController.selectAll)
+    app.get("/users/jointdata",userController.jointData)
+
 
     app.post("/tag/posttag",tagController.insertTags);
     app.get("/tag/gettag",tagController.selectAll);

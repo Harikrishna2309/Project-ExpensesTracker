@@ -62,6 +62,12 @@ exports.updateUser=async(req)=>{
 }
 
 //user list query
-exports.userList=async()=>{
-    return await db.query("select * from users")
+exports.userList=async(phone)=>{
+    return await db.query("select * from users where phone='"+phone+"'")
 }
+
+//joint query
+exports.jointData=async(phone)=>{
+    return await db.query("SELECT u.name, ud.amount FROM users u INNER JOIN expenses ud ON u.id = ud.user_id WHERE u.phone='"+phone+"'")
+}
+

@@ -36,13 +36,24 @@ exports.updateUser=async(req,res)=>{
 
 //to get user list
 exports.selectAll = async(req,res)=>{
-    var selectAll=await users.userList();
-   // console.log(selectAll);
+    var selectAll=await users.userList(req.body.phone);
+   console.log(selectAll);
 
     if(selectAll.rowCount===0){
         res.json({status: "FALSE", message:"No records to print"})
     }
     else{
         res.json({status:"TRUE",result:selectAll.rows});
+    }
+}
+exports.jointData=async(req,res)=>{
+    var jointdata=await users.jointData(req.body.phone);
+    console.log(jointdata);
+
+    if(jointdata.rowCount===0){
+        res.json({status: "FALSE", message:"No records to print"})
+    }
+    else{
+        res.json({status:"TRUE",result:jointdata.rows});
     }
 }
