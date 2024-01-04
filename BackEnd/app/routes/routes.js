@@ -16,7 +16,7 @@ module.exports=app=>{
 
 
     app.post("/tag/posttag",tagController.insertTags);
-    app.get("/tag/gettag",tagController.selectAll);
+    app.post("/tag/gettag",tagController.selectAll);
 
 
     app.post("/expense/postexpense",expenseController.insertExpenseInfo)

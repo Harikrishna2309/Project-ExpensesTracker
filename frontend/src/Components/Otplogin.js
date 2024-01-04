@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import firebase from 'firebase/compat/app'; // Import the main Firebase App module
 import 'firebase/compat/auth'; // Import the authentication module
+import './Otplogin.css';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -17,6 +20,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const PhoneOTPSignIn = () => {
+  const navigate=useNavigate();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [confirmationResult, setConfirmationResult] = useState(null);
@@ -51,6 +55,15 @@ const PhoneOTPSignIn = () => {
       // After successful verification, handle user login or navigate to the next screen
       console.log('User logged in:', user);
       alert('Logged in successfully!');
+        const response = await axios.post('http://localhost:7000/users/getinfo',{
+          phone:phoneNumber
+        });
+        //console.log(response.data.result[0].name);
+        // setUserData(response.data);
+        // console.log(userData);
+        const userData=response.data;
+        console.log(userData)
+        navigate('/Home', { state: { userData } });
     } catch (error) {
       console.error('Error verifying OTP:', error);
       alert('Failed to verify OTP. Please try again.');
@@ -58,10 +71,10 @@ const PhoneOTPSignIn = () => {
   };
 
   return (
-    <div>
+    <div className="phone-auth-container">
       <h2>Login with Phone Number and OTP</h2>
       <div id="recaptcha-container"></div>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form className="phone-auth-form" onSubmit={(e) => e.preventDefault()}>
         <label>
           Phone Number:
           <input

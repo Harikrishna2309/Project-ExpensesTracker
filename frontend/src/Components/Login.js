@@ -8,15 +8,15 @@ import axios from 'axios';
 
 
 const Login=()=>{
-  const [userData, setUserData] = useState('');
+  //const [userData, setUserData] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const navigate=useNavigate();
 
 
-  useEffect(() => {
-    console.log(userData);
-}, [userData]);
+//   useEffect(() => {
+//     console.log(userData);
+// }, [userData]);
 
 
   const handlePhoneChange = (event) => {
@@ -40,15 +40,18 @@ const Login=()=>{
       console.log(userData)
       navigate('/Home', { state: { userData } });
     } catch (error) {
-      console.error('Error fetching user info:', error.message); // Log the specific error message
-      console.error('Error details:', error); // Log the entire error object for more details
-      // Handle error condition
+      console.error('Error fetching user info:', error.message); 
+      console.error('Error details:', error); 
     }
   };
+
+  const Otpsubmit=()=>{
+    navigate('/Otplogin')
+  }
   return(
     <div className="loginform">
     <div className="wrapper">
-      <form onSubmit={handleSubmit}>
+      <form >
         <h1>Login</h1>
         <div className="input-box">
           <input type="phone"placeholder="Enter your phone number"required value={phoneNumber}onChange={handlePhoneChange}/>
@@ -62,12 +65,12 @@ const Login=()=>{
           <label><input type="checkbox"/>Remember me</label>
           <a href="#">Forgot password</a>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" onClick={handleSubmit}>Login</button>
         <div className="register-link">
           <p>Don't have  an account?<Link to="/Register">Register</Link></p>
         </div>
+        <button type="submit" onClick={Otpsubmit}>Login with OTP</button>
       </form>
-      {/* {userData && <Home userData={userData} />} */}
     </div>
     </div>
   )

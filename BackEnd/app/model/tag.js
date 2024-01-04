@@ -22,6 +22,6 @@ exports.insertTag=async(req)=>{
 
 
 
- exports.tagList=async()=>{
-    return await db.query("select * from tags")
+ exports.tagList=async(user_id)=>{
+    return await db.query("select name from tags where user_id="+user_id)
 }
