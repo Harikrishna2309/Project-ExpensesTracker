@@ -1,8 +1,8 @@
 const db=require("../../config/db");
 
 
-exports.selectTag=async(name)=>{
-    return await db.query("select id,name from tags where name='"+name+"'");
+exports.selectTag=async(name,id)=>{
+    return await db.query("select id,name from tags where name='"+name+"'AND user_id='"+id+"'");
 }
 
 exports.insertTag=async(req)=>{

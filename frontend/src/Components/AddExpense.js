@@ -1,5 +1,5 @@
 // AddExpense.js
-import React, { useState,useEffect} from 'react';
+import React, { useState} from 'react';
 import './AddExpense.css'; 
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -17,11 +17,10 @@ const AddExpense = () => {
   const [time,setTime]=useState('')
   const [description,setDesription]=useState('')
 
-  useEffect(() => {
+
     
     const fetchData = async () => {
       console.log(userId)
-      try{
         const response = await axios.post('http://localhost:7000/tag/gettag',{ 
             user_id:userId
         });
@@ -30,13 +29,30 @@ const AddExpense = () => {
         //options=data;
         setOptions(data);
         console.log(options);
-    
-  } catch (error) {
-    console.error('Error fetching data:', error.message);
+      }
+
+const handleCategoryChange = async (e) => {
+  const selectedCategory = e.target.value;
+  if (selectedCategory === "add") {
+    const newCategory = prompt("Enter a new category:");
+    if (newCategory) {
+      try {
+        // Assuming you have an API endpoint to add categories
+        await axios.post('http://localhost:7000/tag/posttag', {
+          user_id: userId,
+          name: newCategory,
+        });
+        const updatedOptions = [...options, { name: newCategory }];
+        setOptions(updatedOptions);
+        setCategory(newCategory);
+      } catch (error) {
+        console.error('Error adding category:', error.message);
+      }
+    }
+  } else {
+    setCategory(selectedCategory);
   }
 };
-fetchData();
-}, [userId,options]);
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -69,10 +85,11 @@ fetchData();
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Transaction Type</label>
-          <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)} required>
-            <option value="">Select Transaction Type</option>
-            <option value="income">Income</option>
+          <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)} >
+            {/* <option value="">Select Transaction Type</option> */}
             <option value="expense">Expense</option>
+            <option value="income">Income</option>
+            
           </select>
         </div>
         <div className="form-group">
@@ -85,13 +102,14 @@ fetchData();
         </div>
         <div className="form-group">
       <label>Category</label>
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+      <select value={category} onChange={handleCategoryChange} onClick={fetchData}>
         <option value="">Select a category</option>
          {options.map((option) => (
           <option key={option.name} value={option.name}>
             {option.name}
           </option>
         ))} 
+        <option value="add">Add</option>
       </select>
     </div>
         <div className='form-group'>
