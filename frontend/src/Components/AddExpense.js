@@ -1,5 +1,5 @@
 // AddExpense.js
-import React, { useState} from 'react';
+import React, { useState,useEffect} from 'react';
 import './AddExpense.css'; 
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -8,7 +8,6 @@ const AddExpense = () => {
   const { userId } = useParams();
   console.log("id= "+userId)
   const [options, setOptions]=useState([])
- // const options=''
   const [transactionType, setTransactionType] = useState('');
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
@@ -30,6 +29,17 @@ const AddExpense = () => {
         setOptions(data);
         console.log(options);
       }
+
+      useEffect(() => {
+        // Set default date to today
+        const today = new Date();
+        const formattedDate = today.toISOString().substr(0, 10); // Format as YYYY-MM-DD
+        setDate(formattedDate);
+    
+        // Set default time to current time
+        const formattedTime = today.toTimeString().split(' ')[0]; // Extract HH:MM:SS
+        setTime(formattedTime);
+      }, []);
 
 const handleCategoryChange = async (e) => {
   const selectedCategory = e.target.value;

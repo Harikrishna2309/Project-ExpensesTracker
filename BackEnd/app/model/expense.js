@@ -20,6 +20,6 @@ exports.insertExpense=async(req)=>{
 
 }
 
-exports.expenseList=async()=>{
-    return await db.query("select * from expenses")
+exports.expenseList=async(id)=>{
+    return await db.query("select * from expenses where user_id="+id+"")
 }

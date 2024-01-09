@@ -19,7 +19,7 @@ exports.insertExpenseInfo = async(req,res)=>{
 }
 
 exports.selectAll = async(req,res)=>{
-    var selectAll=await expense.expenseList();
+    var selectAll=await expense.expenseList(req.body.user_id);
     if(selectAll.rowCount===0){
         res.json({status: "FALSE", message:"No records to print"})
     }

@@ -24,7 +24,7 @@ function Home() {
           <p>id:{userInfo.id}</p>
           {/* Display other user data properties as needed */}
 
-          <Link to="/expenses" className="link">View Expenses</Link>
+          <Link to={`/expenses/${userInfo.id}`}className="link">View Expenses</Link>
           {/* <button className='link'>Add Expense</button> */}
           <Link to={`/add-expense/${userInfo.id}`} className="link">Add Expense</Link>
         </div>
