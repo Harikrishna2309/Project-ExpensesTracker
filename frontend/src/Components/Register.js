@@ -76,6 +76,7 @@ function Register() {
   
       const userCredential = await firebase.auth().signInWithCredential(credential);
       const { user } = userCredential;
+      console.log(user);
   
       navigate('/Home');
   

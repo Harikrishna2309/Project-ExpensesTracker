@@ -20,7 +20,7 @@ module.exports=app=>{
 
 
     app.post("/expense/postexpense",expenseController.insertExpenseInfo)
-    app.get("/expense/expenselist",expenseController.selectAll)
+    app.post("/expense/expenselist",expenseController.selectAll)
 
 
 };

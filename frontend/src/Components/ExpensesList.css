@@ -1,0 +1,41 @@
+/* Style for the expense-container */
+.expense-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto; /* Add margin:auto to center horizontally */
+  
+}
+
+/* Style for the pie-chart section */
+.pie-chart {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Style for the expense-table */
+.expense-table {
+  
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* Style for the table headers */
+.expense-table th {
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+/* Style for the table data cells */
+.expense-table td {
+  padding: 8px;
+  text-align: center;
+}
+
+/* Style for alternating rows in the table */
+.expense-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

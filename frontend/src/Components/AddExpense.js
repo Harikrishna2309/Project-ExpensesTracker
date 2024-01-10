@@ -96,7 +96,7 @@ const handleCategoryChange = async (e) => {
         <div className="form-group">
           <label>Transaction Type</label>
           <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)} >
-            {/* <option value="">Select Transaction Type</option> */}
+            <option value="">Select Transaction Type</option> 
             <option value="expense">Expense</option>
             <option value="income">Income</option>
             
