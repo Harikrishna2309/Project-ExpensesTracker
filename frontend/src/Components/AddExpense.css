@@ -1,5 +1,16 @@
 /* AddExpense.css */
 
+
+.addexpense_full{
+  background:url("./images/money.jpg")no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.link_box {
+  margin-left: auto;
+  size: 10px;
+}
+
 .add-expense-container {
     max-width: 400px;
     margin: 0 auto;
@@ -7,6 +18,8 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
+    background:transparent;
+    backdrop-filter: blur(60px);
   }
   
   .form-group {

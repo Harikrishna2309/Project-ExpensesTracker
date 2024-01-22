@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState,} from "react";
 import { useNavigate } from "react-router-dom";
 import "../Components/Register.css";
 import { FaUser } from "react-icons/fa";
@@ -31,23 +31,18 @@ function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const appVerifierRef = useRef(null);
-  let confirmationResult;
-
-  useEffect(() => {
-
-    appVerifierRef.current = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-  }, []);
+  const [confirmationResult, setConfirmationResult] = useState(null);
 
   const sendOTP = async () => {
     try {
-      const appVerifier = appVerifierRef.current;
-      if (!appVerifier) {
-        alert('Verifier not initialized.');
-        return;
-      }
+      const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
       const phoneNumberWithCountryCode = `+91${phoneNumber}`;
-      confirmationResult = await firebase.auth().signInWithPhoneNumber(phoneNumberWithCountryCode);
+
+      const confirmation = await firebase
+        .auth()
+        .signInWithPhoneNumber(phoneNumberWithCountryCode, appVerifier);
+        
+      setConfirmationResult(confirmation);
       console.log(phoneNumberWithCountryCode);
       console.log(confirmationResult)
       alert('OTP sent successfully!');
@@ -61,30 +56,14 @@ function Register() {
   
 
   const registerUser = async () => {
-    try {
       
-      const credential = firebase.auth.PhoneAuthProvider.credential(
-        confirmationResult.verificationId
-      );
-      const userData = {
-        username,
-        phoneNumber,
-        
-      };
-      const response = await axios.post('http://localhost:7000/register', {name:userData.username,phone:userData.phoneNumber});
+      const response = await axios.post('http://localhost:7000/users/postuser', 
+      {name:username,
+       phone:phoneNumber});
       console.log(response);
-  
-      const userCredential = await firebase.auth().signInWithCredential(credential);
-      const { user } = userCredential;
-      console.log(user);
-  
-      navigate('/Home');
-  
       alert('Account created successfully!');
-    } catch (error) {
-      console.error('Error creating account:', error);
-      alert(`Failed to create account. Error: ${error.message}`);
-    }
+      navigate('/Home');
+    
   };
   
   
@@ -110,12 +89,12 @@ function Register() {
             <MdVerified className="icon"/>
           </div>
           <div className="input-box">
-            <input type="password"placeholder="password"required value={password}
+            <input type="password"placeholder="password" value={password}
               onChange={(e) => setPassword(e.target.value)}/>
             <RiLockPasswordFill className="icon" />
           </div>
           <div className="input-box">
-            <input type="password"placeholder="confirm password"required value={confirmPassword}
+            <input type="password"placeholder="confirm password" value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)} />
             <RiLockPasswordLine className="icon" />
           </div>

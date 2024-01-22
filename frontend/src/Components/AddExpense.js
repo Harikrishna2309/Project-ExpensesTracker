@@ -2,10 +2,10 @@
 import React, { useState,useEffect} from 'react';
 import './AddExpense.css'; 
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 
 const AddExpense = () => {
-  const { userId } = useParams();
+  const { userId ,userName} = useParams();
   console.log("id= "+userId)
   const [options, setOptions]=useState([])
   const [transactionType, setTransactionType] = useState('');
@@ -15,8 +15,7 @@ const AddExpense = () => {
   const [date, setDate]=useState('');
   const [time,setTime]=useState('')
   const [description,setDesription]=useState('')
-
-
+  
     
     const fetchData = async () => {
       console.log(userId)
@@ -90,7 +89,11 @@ const handleCategoryChange = async (e) => {
   };
 
   return (
-    <div className="add-expense-container">
+    <div className='addexpense_full'>
+      <header className="header">
+        <h1>Expenses Tracker</h1> 
+      </header>
+      <div className="add-expense-container">
       <h2 style={{textAlign:'center'}}>New Transaction</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -136,7 +139,23 @@ const handleCategoryChange = async (e) => {
         </div>
         <button type="submit">Submit</button>
       </form>
+      <div className='link_box'>
+       <Link to={`/expenses/${userId}/${userName}`}className="link">View Expenses</Link>
+       </div>
     </div>
+    
+    <footer className="footer">
+          <div>
+            <p>© 2024 Expenses Tracker</p>
+            <p>All rights reserved</p>
+          </div>
+          <div className="social-icons">
+            <a href="#facebook">Facebook</a>
+            <a href="#twitter">Twitter</a>
+            <a href="#instagram">Instagram</a>
+          </div>
+      </footer>
+  </div>
   );
 };
 

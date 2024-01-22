@@ -4,6 +4,8 @@ import 'firebase/compat/auth'; // Import the authentication module
 import './Otplogin.css';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
+import { FaPhoneFlip } from "react-icons/fa6";
+
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -28,7 +30,7 @@ const PhoneOTPSignIn = () => {
   const handleSendOTP = async () => {
     try {
       const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-      const phoneNumberWithCountryCode = `+91${phoneNumber}`; // Ensure correct country code
+      const phoneNumberWithCountryCode = `+91${phoneNumber}`;
 
       const confirmation = await firebase
         .auth()
@@ -36,6 +38,7 @@ const PhoneOTPSignIn = () => {
         
       setConfirmationResult(confirmation);
       alert('OTP sent successfully!');
+      appVerifier.clear();
     } catch (error) {
       console.error('Error sending OTP:', error);
       alert('Failed to send OTP. Please try again.');
@@ -70,31 +73,21 @@ const PhoneOTPSignIn = () => {
     }
   };
 
+  
   return (
     <div className="phone-auth-container">
-      <h2>Login with Phone Number and OTP</h2>
+      {/* <h2>Login with Phone Number and OTP</h2> */}
       <div id="recaptcha-container"></div>
       <form className="phone-auth-form" onSubmit={(e) => e.preventDefault()}>
-        <label>
-          Phone Number:
-          <input
-            type="text"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-          />
-        </label>
-        <br />
+      <div className="input-box">
+          <input type="phone"placeholder="Enter your phone number"required value={phoneNumber}onChange={(e) => setPhoneNumber(e.target.value)}/>
+          <FaPhoneFlip className="icon" />
+        </div>
+      
         <button onClick={handleSendOTP}>Send OTP</button>
-        <br />
-        <label>
-          OTP:
-          <input
-            type="text"
-            value={verificationCode}
-            onChange={(e) => setVerificationCode(e.target.value)}
-          />
-        </label>
-        <br />
+        <div className="input-box">
+          <input type="text"placeholder="Enter the OTP" value={verificationCode}onChange={(e) => setVerificationCode(e.target.value)}/>
+        </div>
         <button onClick={handleVerifyOTP}>Verify OTP</button>
       </form>
     </div>

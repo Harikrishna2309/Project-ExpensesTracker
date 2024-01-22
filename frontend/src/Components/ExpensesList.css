@@ -1,4 +1,10 @@
 /* Style for the expense-container */
+
+
+.header-actions {
+  margin-left: auto;
+  size: 10px; 
+}
 .expense-container {
   display: flex;
   flex-direction: column;

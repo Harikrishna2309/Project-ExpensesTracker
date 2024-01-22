@@ -4,13 +4,14 @@ import { FaPhoneFlip } from "react-icons/fa6";
 import { FaLock } from "react-icons/fa";
 import "../Components/Login.css"
 import axios from 'axios';
-//import Home from "./Home";
-
+import Otplogin from"./Otplogin"
 
 const Login=()=>{
   //const [userData, setUserData] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [showOtpLogin, setShowOtpLogin] = useState(false);
+
   const navigate=useNavigate();
 
 
@@ -45,12 +46,15 @@ const Login=()=>{
     }
   };
 
-  const Otpsubmit=()=>{
-    navigate('/Otplogin')
-  }
+  const Otpsubmit = () => {
+    setShowOtpLogin(true);
+  };
   return(
     <div className="loginform">
     <div className="wrapper">
+    {showOtpLogin ? (
+          <Otplogin />
+        ) : (
       <form >
         <h1>Login</h1>
         <div className="input-box">
@@ -70,7 +74,10 @@ const Login=()=>{
           <p>Don't have  an account?<Link to="/Register">Register</Link></p>
         </div>
         <button type="submit" onClick={Otpsubmit}>Login with OTP</button>
+        {showOtpLogin ? <Otplogin /> : null}
+
       </form>
+      )}
     </div>
     </div>
   )
